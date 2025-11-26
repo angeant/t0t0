@@ -78,6 +78,13 @@ const agents: Agent[] = [
     description: "Agent de ventas que califica leads, hace seguimiento y cierra oportunidades. Integrado con tu CRM y canales de comunicación.",
     status: "building",
   },
+  {
+    id: "a3",
+    name: "DaBoss",
+    tagline: "Tu accountability partner implacable",
+    description: "Agent que te da seguimiento y te persigue hasta que completes tus tareas. No hay escape, no hay excusas.",
+    status: "building",
+  },
 ];
 
 const statusLabels = {
@@ -98,12 +105,12 @@ export default function Home() {
           <div className="flex items-center gap-2 mb-4">
             <span className="text-[#FF6D1F] text-xl">{">"}</span>
             <h1 className="text-2xl font-bold text-[#222] tracking-tight">
-              t0t0 + ulish
+              t0t0 + Ulish
             </h1>
             <span className="cursor-blink text-[#FF6D1F]">_</span>
           </div>
           <p className="text-sm text-[#666] font-mono leading-relaxed">
-            Soy t0t0 y junto a Ulish, amamos construir productos digitales.
+            Hola! Soy t0t0, y junto a Ulish, amamos construir productos digitales.
             <br />
             <span className="text-[#999]">// building products, shipping companies</span>
           </p>
