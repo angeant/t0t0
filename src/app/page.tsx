@@ -10,8 +10,6 @@ interface Venture {
   description: string;
   url: string;
   status: "live" | "building" | "soon";
-  color: string;
-  icon: string;
 }
 
 interface Agent {
@@ -20,8 +18,6 @@ interface Agent {
   tagline: string;
   description: string;
   status: "live" | "building" | "soon";
-  color: string;
-  icon: string;
 }
 
 const ventures: Venture[] = [
@@ -32,8 +28,6 @@ const ventures: Venture[] = [
     description: "Pipeline de inversión asistido por AI agents. Para VCs y Founders que quieren cerrar más deals sin perderse en planillas.",
     url: "https://ventureloop.io",
     status: "live",
-    color: "#80CBCB",
-    icon: "◈",
   },
   {
     id: "v2",
@@ -42,8 +36,6 @@ const ventures: Venture[] = [
     description: "Motor de conversaciones por WhatsApp ultra específico. Venta, seguimiento y personalización en cada mensaje.",
     url: "https://kalia.ai",
     status: "live",
-    color: "#9B59B6",
-    icon: "◉",
   },
   {
     id: "v3",
@@ -52,8 +44,6 @@ const ventures: Venture[] = [
     description: "Un supermercado de barrio con un core de AI en su operación. Optimización de stock, precios y experiencia de compra.",
     url: "https://uniexpress.com.ar",
     status: "live",
-    color: "#27AE60",
-    icon: "◇",
   },
   {
     id: "v4",
@@ -62,8 +52,6 @@ const ventures: Venture[] = [
     description: "Creá tu Sociedad por Acciones Simplificada en Mendoza. Seguimiento de facturación y presentaciones en tiempo y forma.",
     url: "https://mendosas.com",
     status: "building",
-    color: "#E74C3C",
-    icon: "◆",
   },
   {
     id: "v5",
@@ -72,8 +60,6 @@ const ventures: Venture[] = [
     description: "Tu community manager con IA. Crea piezas de contenido y publica automáticamente en todas tus redes.",
     url: "https://muni.social",
     status: "building",
-    color: "#F39C12",
-    icon: "◎",
   },
 ];
 
@@ -84,8 +70,6 @@ const agents: Agent[] = [
     tagline: "Gestión de turnos para profesionales",
     description: "Agent para management de turnos de médicos y otros profesionales. Agenda, confirma, reprograma y hace seguimiento automático.",
     status: "live",
-    color: "#3498DB",
-    icon: "⬡",
   },
   {
     id: "a2",
@@ -93,14 +77,12 @@ const agents: Agent[] = [
     tagline: "Tu vendedor que nunca duerme",
     description: "Agent de ventas que califica leads, hace seguimiento y cierra oportunidades. Integrado con tu CRM y canales de comunicación.",
     status: "building",
-    color: "#E91E63",
-    icon: "⬢",
   },
 ];
 
 const statusLabels = {
   live: "● live",
-  building: "◐ building",
+  building: "○ building",
   soon: "○ soon",
 };
 
@@ -110,9 +92,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#FAF3E1] relative scanlines noise">
-      <div className="relative z-10 max-w-3xl mx-auto px-6 py-16">
+      <div className="relative z-10 max-w-2xl mx-auto px-6 py-16">
         {/* Header */}
-        <header className="mb-20">
+        <header className="mb-16">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-[#FF6D1F] text-xl">{">"}</span>
             <h1 className="text-2xl font-bold text-[#222] tracking-tight">
@@ -146,15 +128,15 @@ export default function Home() {
         </header>
 
         {/* Ventures Section */}
-        <section className="mb-20">
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-xs text-[#FF6D1F] uppercase tracking-wider font-bold">
+        <section className="mb-14">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xs text-[#999] uppercase tracking-wider">
               ./ventures
             </span>
-            <div className="flex-1 h-px bg-[#FF6D1F]/30" />
+            <div className="flex-1 h-px bg-[#E5DCC8]" />
           </div>
 
-          <div className="grid gap-4">
+          <div className="grid gap-2">
             {ventures.map((venture) => (
               <a
                 key={venture.id}
@@ -166,74 +148,36 @@ export default function Home() {
               >
                 <Card
                   className={`
-                    bg-[#222] border-[#333] 
-                    transition-all duration-300 cursor-pointer
-                    py-5 px-6 group overflow-hidden relative
+                    bg-[#F5E7C6]/50 border-[#E5DCC8] 
+                    hover:bg-[#F5E7C6] hover:border-[#D5CCA8]
+                    transition-all duration-200 cursor-pointer
+                    py-3 px-4 group
                   `}
-                  style={{
-                    borderColor: hoveredVenture === venture.id ? `${venture.color}50` : '#333',
-                  }}
                 >
-                  {/* Glow effect on hover */}
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `radial-gradient(ellipse at top right, ${venture.color}15, transparent 70%)`,
-                    }}
-                  />
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <span 
-                          className="text-2xl"
-                          style={{ color: venture.color }}
-                        >
-                          {venture.icon}
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#999] text-sm group-hover:text-[#FF6D1F] transition-colors">
+                          ~/
                         </span>
-                        <div>
-                          <h3 className="font-bold text-[#FAF3E1] text-lg group-hover:text-white transition-colors">
-                            {venture.name}
-                          </h3>
-                          <p className="text-xs text-[#888] group-hover:text-[#aaa] transition-colors">
-                            {venture.tagline}
-                          </p>
-                        </div>
+                        <h3 className="font-medium text-[#222]">
+                          {venture.name}
+                        </h3>
+                        <span className="text-[#999] text-xs">
+                          — {venture.tagline}
+                        </span>
                       </div>
 
-                      <div className="flex items-center gap-3">
-                        <span 
-                          className="text-xs font-mono px-2 py-1 rounded"
-                          style={{ 
-                            color: venture.status === 'live' ? venture.color : '#888',
-                            backgroundColor: venture.status === 'live' ? `${venture.color}20` : 'transparent',
-                          }}
-                        >
-                          {statusLabels[venture.status]}
-                        </span>
-                        
-                        {/* Arrow indicator */}
-                        <span 
-                          className={`
-                            transition-all duration-300 text-lg
-                            ${hoveredVenture === venture.id ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}
-                          `}
-                          style={{ color: venture.color }}
-                        >
-                          →
-                        </span>
-                      </div>
+                      {hoveredVenture === venture.id && (
+                        <p className="mt-2 text-sm text-[#666] card-description ml-5">
+                          {venture.description}
+                        </p>
+                      )}
                     </div>
 
-                    <p 
-                      className={`
-                        text-sm text-[#888] leading-relaxed pl-9
-                        transition-all duration-300 overflow-hidden
-                        ${hoveredVenture === venture.id ? 'max-h-20 opacity-100 mt-0' : 'max-h-0 opacity-0 -mt-3'}
-                      `}
-                    >
-                      {venture.description}
-                    </p>
+                    <span className={`text-xs font-mono ${venture.status === 'live' ? 'text-[#222]' : 'text-[#999]'}`}>
+                      {statusLabels[venture.status]}
+                    </span>
                   </div>
                 </Card>
               </a>
@@ -242,15 +186,15 @@ export default function Home() {
         </section>
 
         {/* Agents Section */}
-        <section className="mb-16">
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-xs text-[#FF6D1F] uppercase tracking-wider font-bold">
+        <section className="mb-14">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xs text-[#999] uppercase tracking-wider">
               ./agents
             </span>
-            <div className="flex-1 h-px bg-[#FF6D1F]/30" />
+            <div className="flex-1 h-px bg-[#E5DCC8]" />
           </div>
 
-          <div className="grid gap-4">
+          <div className="grid gap-2">
             {agents.map((agent) => (
               <div
                 key={agent.id}
@@ -259,61 +203,36 @@ export default function Home() {
               >
                 <Card
                   className={`
-                    bg-[#F5E7C6]/80 border-[#E5DCC8] 
-                    transition-all duration-300
-                    py-5 px-6 group overflow-hidden relative
+                    bg-[#F5E7C6]/50 border-[#E5DCC8] 
+                    hover:bg-[#F5E7C6] hover:border-[#D5CCA8]
+                    transition-all duration-200
+                    py-3 px-4 group
                   `}
-                  style={{
-                    borderColor: hoveredAgent === agent.id ? `${agent.color}50` : '#E5DCC8',
-                  }}
                 >
-                  {/* Glow effect on hover */}
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `radial-gradient(ellipse at top right, ${agent.color}10, transparent 70%)`,
-                    }}
-                  />
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <span 
-                          className="text-2xl"
-                          style={{ color: agent.color }}
-                        >
-                          {agent.icon}
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#999] text-sm group-hover:text-[#FF6D1F] transition-colors">
+                          λ
                         </span>
-                        <div>
-                          <h3 className="font-bold text-[#222] text-lg group-hover:text-[#111] transition-colors">
-                            {agent.name}
-                          </h3>
-                          <p className="text-xs text-[#888] group-hover:text-[#666] transition-colors">
-                            {agent.tagline}
-                          </p>
-                        </div>
+                        <h3 className="font-medium text-[#222]">
+                          {agent.name}
+                        </h3>
+                        <span className="text-[#999] text-xs">
+                          — {agent.tagline}
+                        </span>
                       </div>
 
-                      <span 
-                        className="text-xs font-mono px-2 py-1 rounded"
-                        style={{ 
-                          color: agent.status === 'live' ? agent.color : '#888',
-                          backgroundColor: agent.status === 'live' ? `${agent.color}20` : 'transparent',
-                        }}
-                      >
-                        {statusLabels[agent.status]}
-                      </span>
+                      {hoveredAgent === agent.id && (
+                        <p className="mt-2 text-sm text-[#666] card-description ml-4">
+                          {agent.description}
+                        </p>
+                      )}
                     </div>
 
-                    <p 
-                      className={`
-                        text-sm text-[#666] leading-relaxed pl-9
-                        transition-all duration-300 overflow-hidden
-                        ${hoveredAgent === agent.id ? 'max-h-20 opacity-100 mt-0' : 'max-h-0 opacity-0 -mt-3'}
-                      `}
-                    >
-                      {agent.description}
-                    </p>
+                    <span className={`text-xs font-mono ${agent.status === 'live' ? 'text-[#222]' : 'text-[#999]'}`}>
+                      {statusLabels[agent.status]}
+                    </span>
                   </div>
                 </Card>
               </div>
