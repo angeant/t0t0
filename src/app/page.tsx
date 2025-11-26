@@ -14,12 +14,14 @@ interface Venture {
   icon: string;
 }
 
-interface Project {
+interface Agent {
   id: string;
   name: string;
+  tagline: string;
   description: string;
-  url: string;
-  status: "live" | "building" | "idea";
+  status: "live" | "building" | "soon";
+  color: string;
+  icon: string;
 }
 
 const ventures: Venture[] = [
@@ -75,47 +77,36 @@ const ventures: Venture[] = [
   },
 ];
 
-const projects: Project[] = [
+const agents: Agent[] = [
   {
-    id: "1",
-    name: "api-thing",
-    description: "wrapper minimalista para apis rest. menos código, más café.",
-    url: "https://github.com/t0t0/api-thing",
+    id: "a1",
+    name: "TurnosMed",
+    tagline: "Gestión de turnos para profesionales",
+    description: "Agent para management de turnos de médicos y otros profesionales. Agenda, confirma, reprograma y hace seguimiento automático.",
     status: "live",
+    color: "#3498DB",
+    icon: "⬡",
   },
   {
-    id: "2",
-    name: "pixel-sorter",
-    description: "ordena pixeles de imágenes por brillo. arte glitch on demand.",
-    url: "https://github.com/t0t0/pixel-sorter",
-    status: "live",
-  },
-  {
-    id: "3",
-    name: "cmd-notes",
-    description: "notas desde la terminal. sin distracciones, solo texto.",
-    url: "https://github.com/t0t0/cmd-notes",
+    id: "a2",
+    name: "SalesAgent",
+    tagline: "Tu vendedor que nunca duerme",
+    description: "Agent de ventas que califica leads, hace seguimiento y cierra oportunidades. Integrado con tu CRM y canales de comunicación.",
     status: "building",
+    color: "#E91E63",
+    icon: "⬢",
   },
 ];
-
-const statusStyles = {
-  live: "text-[#222]",
-  building: "text-[#FF6D1F]",
-  idea: "text-[#888]",
-  soon: "text-[#888]",
-};
 
 const statusLabels = {
   live: "● live",
   building: "◐ building",
-  idea: "○ idea",
   soon: "○ soon",
 };
 
 export default function Home() {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [hoveredVenture, setHoveredVenture] = useState<string | null>(null);
+  const [hoveredAgent, setHoveredAgent] = useState<string | null>(null);
 
   return (
     <main className="min-h-screen bg-[#FAF3E1] relative scanlines noise">
@@ -125,15 +116,33 @@ export default function Home() {
           <div className="flex items-center gap-2 mb-4">
             <span className="text-[#FF6D1F] text-xl">{">"}</span>
             <h1 className="text-2xl font-bold text-[#222] tracking-tight">
-              t0t0
+              t0t0 + ulish
             </h1>
             <span className="cursor-blink text-[#FF6D1F]">_</span>
           </div>
           <p className="text-sm text-[#666] font-mono leading-relaxed">
-            product builder. haciendo cosas que a veces funcionan.
+            Soy t0t0 y junto a Ulish, amamos construir productos digitales.
             <br />
             <span className="text-[#999]">// building products, shipping companies</span>
           </p>
+          <div className="flex gap-4 mt-4">
+            <a
+              href="https://twitter.com/t0t0_btc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#888] hover:text-[#FF6D1F] transition-colors"
+            >
+              @t0t0_btc
+            </a>
+            <a
+              href="https://twitter.com/uguareschi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#888] hover:text-[#FF6D1F] transition-colors"
+            >
+              @uguareschi
+            </a>
+          </div>
         </header>
 
         {/* Ventures Section */}
@@ -158,7 +167,6 @@ export default function Home() {
                 <Card
                   className={`
                     bg-[#222] border-[#333] 
-                    hover:border-[${venture.color}]/50
                     transition-all duration-300 cursor-pointer
                     py-5 px-6 group overflow-hidden relative
                   `}
@@ -233,57 +241,82 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Side Projects */}
-        <section>
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-xs text-[#999] uppercase tracking-wider">
-              ./side-projects
+        {/* Agents Section */}
+        <section className="mb-16">
+          <div className="flex items-center gap-2 mb-8">
+            <span className="text-xs text-[#FF6D1F] uppercase tracking-wider font-bold">
+              ./agents
             </span>
-            <div className="flex-1 h-px bg-[#E5DCC8]" />
+            <div className="flex-1 h-px bg-[#FF6D1F]/30" />
           </div>
 
-          <div className="grid gap-3">
-            {projects.map((project) => (
-              <a
-                key={project.id}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
+          <div className="grid gap-4">
+            {agents.map((agent) => (
+              <div
+                key={agent.id}
+                onMouseEnter={() => setHoveredAgent(agent.id)}
+                onMouseLeave={() => setHoveredAgent(null)}
               >
                 <Card
                   className={`
-                    bg-[#F5E7C6]/50 border-[#E5DCC8] 
-                    hover:bg-[#F5E7C6] hover:border-[#FF6D1F]/30
-                    transition-all duration-200 cursor-pointer
-                    py-4 px-5 group
+                    bg-[#F5E7C6]/80 border-[#E5DCC8] 
+                    transition-all duration-300
+                    py-5 px-6 group overflow-hidden relative
                   `}
+                  style={{
+                    borderColor: hoveredAgent === agent.id ? `${agent.color}50` : '#E5DCC8',
+                  }}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
+                  {/* Glow effect on hover */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: `radial-gradient(ellipse at top right, ${agent.color}10, transparent 70%)`,
+                    }}
+                  />
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <span className="text-[#888] text-sm group-hover:text-[#FF6D1F] transition-colors">
-                          ~/
+                        <span 
+                          className="text-2xl"
+                          style={{ color: agent.color }}
+                        >
+                          {agent.icon}
                         </span>
-                        <h3 className="font-medium text-[#222] group-hover:text-[#222]">
-                          {project.name}
-                        </h3>
+                        <div>
+                          <h3 className="font-bold text-[#222] text-lg group-hover:text-[#111] transition-colors">
+                            {agent.name}
+                          </h3>
+                          <p className="text-xs text-[#888] group-hover:text-[#666] transition-colors">
+                            {agent.tagline}
+                          </p>
+                        </div>
                       </div>
 
-                      {hoveredId === project.id && (
-                        <p className="mt-2 text-sm text-[#666] card-description ml-7">
-                          {project.description}
-                        </p>
-                      )}
+                      <span 
+                        className="text-xs font-mono px-2 py-1 rounded"
+                        style={{ 
+                          color: agent.status === 'live' ? agent.color : '#888',
+                          backgroundColor: agent.status === 'live' ? `${agent.color}20` : 'transparent',
+                        }}
+                      >
+                        {statusLabels[agent.status]}
+                      </span>
                     </div>
 
-                    <span className={`text-xs font-mono ${statusStyles[project.status]}`}>
-                      {statusLabels[project.status]}
-                    </span>
+                    <p 
+                      className={`
+                        text-sm text-[#666] leading-relaxed pl-9
+                        transition-all duration-300 overflow-hidden
+                        ${hoveredAgent === agent.id ? 'max-h-20 opacity-100 mt-0' : 'max-h-0 opacity-0 -mt-3'}
+                      `}
+                    >
+                      {agent.description}
+                    </p>
                   </div>
                 </Card>
-              </a>
+              </div>
             ))}
           </div>
         </section>
@@ -294,26 +327,20 @@ export default function Home() {
             <span>$ echo &quot;construyendo&quot;</span>
             <div className="flex gap-4">
               <a
-                href="https://github.com/t0t0"
+                href="https://twitter.com/t0t0_btc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#FF6D1F] transition-colors"
               >
-                github
+                @t0t0_btc
               </a>
               <a
-                href="https://twitter.com/t0t0"
+                href="https://twitter.com/uguareschi"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#FF6D1F] transition-colors"
               >
-                twitter
-              </a>
-              <a
-                href="mailto:hola@t0t0.dev"
-                className="hover:text-[#FF6D1F] transition-colors"
-              >
-                mail
+                @uguareschi
               </a>
             </div>
           </div>
