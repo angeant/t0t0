@@ -387,7 +387,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="mt-16 pt-8 border-t border-[#E5DCC8]">
           <div className="flex items-center justify-between text-xs text-[#999]">
-            <span>$ echo &quot;construyendo&quot;</span>
+            <span className="italic">&quot;Wealth is assets that earn while you sleep&quot; — Naval</span>
             <div className="flex gap-4">
               <a
                 href="https://twitter.com/t0t0_build"
