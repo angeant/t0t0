@@ -117,7 +117,7 @@ export default function Home() {
             <span className="cursor-blink text-[#FF6D1F]">_</span>
           </div>
           <p className="text-sm text-[#666] font-mono leading-relaxed">
-            Hola! Soy t0t0, y junto a Ulish, amamos construir productos digitales.
+            Hola! Soy t0t0, y junto a Ulish, amamos construir productos digitales utilizando IA.
             <br />
             <span className="text-[#999]">// building products, shipping companies</span>
           </p>
