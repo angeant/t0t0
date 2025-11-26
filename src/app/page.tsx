@@ -85,6 +85,13 @@ const agents: Agent[] = [
     description: "Agent que te acompaña hasta lograr tu objetivo. Ojo: no cumplir no es gratis $$.",
     status: "building",
   },
+  {
+    id: "a4",
+    name: "Facturita",
+    tagline: "Facturación AFIP sin vueltas",
+    description: "Agent que te pide tus datos de AFIP y te emite facturas con los detalles que vos le des. Simple y rápido.",
+    status: "building",
+  },
 ];
 
 const statusLabels = {
