@@ -32,7 +32,7 @@ const ventures: Venture[] = [
   {
     id: "v2",
     name: "Kalia",
-    tagline: "Motor conversacional de AI",
+    tagline: "Motor conversacional de AI por WhatsApp",
     description: "Motor conversacional de AI aplicado a tareas de seguimiento, carga de datos, análisis y reportes.",
     url: "https://kalia.ai",
     status: "live",
