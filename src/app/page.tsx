@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 
 interface Venture {
@@ -99,6 +100,13 @@ const agents: Agent[] = [
     description: "Agent que te pide tus datos de AFIP y te emite facturas con los detalles que vos le des. Simple y rápido.",
     status: "building",
   },
+  {
+    id: "a5",
+    name: "Memorita",
+    tagline: "Te recuerda cosas",
+    description: "Tirále data y Memorita la guarda. Nombres de padres de compañeritos, fechas importantes, lo que sea. Cuando la necesitás, la tenés.",
+    status: "building",
+  },
 ];
 
 const articles: Article[] = [
@@ -106,19 +114,19 @@ const articles: Article[] = [
     id: "b1",
     title: "Cómo construimos Kalia en 2 semanas",
     date: "2024-11-20",
-    url: "#",
+    url: "/blog/como-construimos-kalia",
   },
   {
     id: "b2",
     title: "AI Agents: qué son y por qué importan",
     date: "2024-11-15",
-    url: "#",
+    url: "/blog/ai-agents-que-son",
   },
   {
     id: "b3",
     title: "De idea a producto: el stack que usamos",
     date: "2024-11-10",
-    url: "#",
+    url: "/blog/de-idea-a-producto-stack",
   },
 ];
 
@@ -161,12 +169,12 @@ export default function Home() {
           </p>
           <div className="flex gap-4 mt-4">
             <a
-              href="https://twitter.com/t0t0_btc"
+              href="https://twitter.com/t0t0_build"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-[#888] hover:text-[#FF6D1F] transition-colors"
             >
-              @t0t0_btc
+              @t0t0_build
             </a>
             <a
               href="https://twitter.com/uguareschi"
@@ -299,11 +307,14 @@ export default function Home() {
               ./blog
             </span>
             <div className="flex-1 h-px bg-[#E5DCC8]" />
+            <Link href="/blog" className="text-xs text-[#999] hover:text-[#FF6D1F] transition-colors">
+              ver todos →
+            </Link>
           </div>
 
           <div className="grid gap-2">
             {articles.map((article) => (
-              <a
+              <Link
                 key={article.id}
                 href={article.url}
                 className="group"
@@ -330,7 +341,7 @@ export default function Home() {
                     </span>
                   </div>
                 </Card>
-              </a>
+              </Link>
             ))}
           </div>
         </section>
@@ -379,12 +390,12 @@ export default function Home() {
             <span>$ echo &quot;construyendo&quot;</span>
             <div className="flex gap-4">
               <a
-                href="https://twitter.com/t0t0_btc"
+                href="https://twitter.com/t0t0_build"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#FF6D1F] transition-colors"
               >
-                @t0t0_btc
+                @t0t0_build
               </a>
               <a
                 href="https://twitter.com/uguareschi"
