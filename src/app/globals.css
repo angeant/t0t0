@@ -123,3 +123,69 @@
   pointer-events: none;
   z-index: 0;
 }
+
+/* Syntax highlighting - minimal theme */
+.hljs {
+  background: transparent !important;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-section,
+.hljs-doctag,
+.hljs-name,
+.hljs-strong {
+  color: #FF6D1F;
+}
+
+.hljs-string,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-meta {
+  color: #888;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #666;
+  font-style: italic;
+}
+
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-bullet,
+.hljs-link {
+  color: #aaa;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params,
+.hljs-property {
+  color: #ccc;
+}
+
+.hljs-built_in,
+.hljs-type {
+  color: #999;
+}
+
+.hljs-symbol,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #FF6D1F;
+}
+
+.hljs-addition {
+  color: #6f6;
+}
+
+.hljs-deletion {
+  color: #f66;
+}

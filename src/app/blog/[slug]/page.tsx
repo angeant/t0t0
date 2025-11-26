@@ -2,6 +2,8 @@ import { supabase, BlogArticle } from "@/lib/supabase";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 async function getArticle(slug: string): Promise<BlogArticle | null> {
   const { data, error } = await supabase
@@ -31,36 +33,32 @@ export default async function ArticlePage({
   }
 
   return (
-    <main className="min-h-screen bg-[#FAF3E1] relative">
-      <div className="relative z-10 max-w-[680px] mx-auto px-6 py-16">
+    <main className="min-h-screen bg-[#FAF3E1] relative scanlines noise">
+      <div className="relative z-10 max-w-2xl mx-auto px-6 py-12">
         {/* Back link */}
         <Link 
           href="/blog" 
-          className="inline-flex items-center gap-2 mb-10 text-[#999] hover:text-[#FF6D1F] transition-colors text-sm"
+          className="inline-flex items-center gap-1 mb-8 text-[#999] hover:text-[#FF6D1F] transition-colors text-xs font-mono"
         >
-          <span>←</span>
+          <span>{"<-"}</span>
           <span>blog</span>
         </Link>
         
         {/* Article Header */}
-        <header className="mb-10">
-          <p className="text-sm text-[#999] font-mono mb-4">
+        <header className="mb-8">
+          <p className="text-xs text-[#999] font-mono mb-3">
             {article.published_at 
-              ? new Date(article.published_at).toLocaleDateString('es-AR', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })
+              ? new Date(article.published_at).toISOString().split('T')[0]
               : ''
             }
           </p>
 
-          <h1 className="text-4xl font-bold text-[#222] tracking-tight leading-tight mb-6">
+          <h1 className="text-2xl font-bold text-[#222] tracking-tight leading-tight mb-4">
             {article.title}
           </h1>
 
           {article.excerpt && (
-            <p className="text-xl text-[#666] leading-relaxed">
+            <p className="text-sm text-[#666] leading-relaxed">
               {article.excerpt}
             </p>
           )}
@@ -68,7 +66,7 @@ export default async function ArticlePage({
 
         {/* Header Image */}
         {article.header_image && (
-          <div className="mb-10 rounded-lg overflow-hidden">
+          <div className="mb-8 rounded overflow-hidden border border-[#E5DCC8]">
             <img 
               src={article.header_image} 
               alt={article.title}
@@ -77,43 +75,45 @@ export default async function ArticlePage({
           </div>
         )}
 
-        {/* Content - Medium style */}
-        <article className="prose-article">
+        {/* Content - Techie style */}
+        <article className="prose-techie">
           {article.content && (
             <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
               components={{
                 h1: ({ children }) => (
-                  <h1 className="text-3xl font-bold text-[#222] mt-12 mb-4 leading-tight">
+                  <h1 className="text-xl font-bold text-[#222] mt-8 mb-3 leading-tight">
                     {children}
                   </h1>
                 ),
                 h2: ({ children }) => (
-                  <h2 className="text-2xl font-bold text-[#222] mt-10 mb-4 leading-tight">
+                  <h2 className="text-lg font-bold text-[#222] mt-6 mb-2 leading-tight">
                     {children}
                   </h2>
                 ),
                 h3: ({ children }) => (
-                  <h3 className="text-xl font-bold text-[#222] mt-8 mb-3 leading-tight">
+                  <h3 className="text-base font-semibold text-[#222] mt-5 mb-2 leading-tight">
                     {children}
                   </h3>
                 ),
                 p: ({ children }) => (
-                  <p className="text-lg text-[#444] leading-[1.8] mb-6">
+                  <p className="text-sm text-[#555] leading-relaxed mb-4">
                     {children}
                   </p>
                 ),
                 ul: ({ children }) => (
-                  <ul className="text-lg text-[#444] leading-[1.8] mb-6 pl-6 list-disc">
+                  <ul className="text-sm text-[#555] leading-relaxed mb-4 pl-4 list-disc list-outside space-y-1">
                     {children}
                   </ul>
                 ),
                 ol: ({ children }) => (
-                  <ol className="text-lg text-[#444] leading-[1.8] mb-6 pl-6 list-decimal">
+                  <ol className="text-sm text-[#555] leading-relaxed mb-4 pl-4 list-decimal list-outside space-y-1">
                     {children}
                   </ol>
                 ),
                 li: ({ children }) => (
-                  <li className="mb-2">
+                  <li className="pl-1">
                     {children}
                   </li>
                 ),
@@ -123,39 +123,39 @@ export default async function ArticlePage({
                   </strong>
                 ),
                 em: ({ children }) => (
-                  <em className="italic">
+                  <em className="italic text-[#666]">
                     {children}
                   </em>
                 ),
                 blockquote: ({ children }) => (
-                  <blockquote className="border-l-4 border-[#FF6D1F] pl-6 my-8 text-xl text-[#666] italic">
+                  <blockquote className="border-l-2 border-[#999] pl-4 my-4 text-sm text-[#777] italic">
                     {children}
                   </blockquote>
                 ),
                 code: ({ children, className }) => {
-                  const isInline = !className;
-                  if (isInline) {
+                  const isBlock = className?.includes('language-');
+                  if (!isBlock && !className) {
                     return (
-                      <code className="bg-[#F5E7C6] text-[#222] px-1.5 py-0.5 rounded text-base font-mono">
+                      <code className="bg-[#E5DCC8] text-[#222] px-1 py-0.5 rounded text-xs font-mono">
                         {children}
                       </code>
                     );
                   }
                   return (
-                    <code className="block bg-[#222] text-[#FAF3E1] p-4 rounded-lg text-sm font-mono overflow-x-auto my-6">
+                    <code className={className}>
                       {children}
                     </code>
                   );
                 },
                 pre: ({ children }) => (
-                  <pre className="bg-[#222] text-[#FAF3E1] p-5 rounded-lg text-sm font-mono overflow-x-auto my-8">
+                  <pre className="bg-[#1a1a1a] text-[#e5e5e5] p-4 rounded text-xs font-mono overflow-x-auto my-4 border border-[#333]">
                     {children}
                   </pre>
                 ),
                 a: ({ href, children }) => (
                   <a 
                     href={href} 
-                    className="text-[#FF6D1F] underline underline-offset-2 hover:text-[#222] transition-colors"
+                    className="text-[#FF6D1F] hover:underline"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -163,7 +163,24 @@ export default async function ArticlePage({
                   </a>
                 ),
                 hr: () => (
-                  <hr className="border-none h-px bg-[#E5DCC8] my-10" />
+                  <hr className="border-none h-px bg-[#E5DCC8] my-6" />
+                ),
+                table: ({ children }) => (
+                  <div className="overflow-x-auto my-4">
+                    <table className="w-full text-xs border-collapse">
+                      {children}
+                    </table>
+                  </div>
+                ),
+                th: ({ children }) => (
+                  <th className="border border-[#E5DCC8] bg-[#F5E7C6] px-3 py-2 text-left font-semibold text-[#222]">
+                    {children}
+                  </th>
+                ),
+                td: ({ children }) => (
+                  <td className="border border-[#E5DCC8] px-3 py-2 text-[#555]">
+                    {children}
+                  </td>
                 ),
               }}
             >
@@ -172,26 +189,26 @@ export default async function ArticlePage({
           )}
         </article>
 
-        {/* Author / Share section */}
-        <div className="mt-16 pt-8 border-t border-[#E5DCC8]">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-[#222] rounded-full flex items-center justify-center text-[#FF6D1F] font-bold text-lg">
-              t0
+        {/* Author */}
+        <div className="mt-10 pt-6 border-t border-[#E5DCC8]">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#222] rounded flex items-center justify-center text-[#FF6D1F] font-mono text-xs">
+              {">>"}
             </div>
             <div>
-              <p className="font-medium text-[#222]">t0t0 + Ulish</p>
-              <p className="text-sm text-[#999]">Construyendo productos digitales con IA</p>
+              <p className="text-sm font-medium text-[#222]">t0t0 + Ulish</p>
+              <p className="text-xs text-[#999]">building with ai</p>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-16 pt-8 border-t border-[#E5DCC8]">
+        <footer className="mt-10 pt-6 border-t border-[#E5DCC8]">
           <div className="flex items-center justify-between text-xs text-[#999]">
-            <Link href="/" className="hover:text-[#FF6D1F] transition-colors">
-              ← t0t0 + Ulish
+            <Link href="/" className="hover:text-[#FF6D1F] transition-colors font-mono">
+              cd ~
             </Link>
-            <div className="flex gap-4">
+            <div className="flex gap-4 font-mono">
               <a
                 href="https://twitter.com/t0t0_build"
                 target="_blank"
