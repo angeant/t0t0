@@ -20,6 +20,13 @@ interface Agent {
   status: "live" | "building" | "soon";
 }
 
+interface Article {
+  id: string;
+  title: string;
+  date: string;
+  url: string;
+}
+
 const ventures: Venture[] = [
   {
     id: "v1",
@@ -94,6 +101,27 @@ const agents: Agent[] = [
   },
 ];
 
+const articles: Article[] = [
+  {
+    id: "b1",
+    title: "Cómo construimos Kalia en 2 semanas",
+    date: "2024-11-20",
+    url: "#",
+  },
+  {
+    id: "b2",
+    title: "AI Agents: qué son y por qué importan",
+    date: "2024-11-15",
+    url: "#",
+  },
+  {
+    id: "b3",
+    title: "De idea a producto: el stack que usamos",
+    date: "2024-11-10",
+    url: "#",
+  },
+];
+
 const statusLabels = {
   live: "● live",
   building: "○ building",
@@ -103,6 +131,7 @@ const statusLabels = {
 export default function Home() {
   const [hoveredVenture, setHoveredVenture] = useState<string | null>(null);
   const [hoveredAgent, setHoveredAgent] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
 
   return (
     <main className="min-h-screen bg-[#FAF3E1] relative scanlines noise">
@@ -261,6 +290,87 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Blog Section */}
+        <section className="mb-14">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xs text-[#999] uppercase tracking-wider">
+              ./blog
+            </span>
+            <div className="flex-1 h-px bg-[#E5DCC8]" />
+          </div>
+
+          <div className="grid gap-2">
+            {articles.map((article) => (
+              <a
+                key={article.id}
+                href={article.url}
+                className="group"
+              >
+                <Card
+                  className={`
+                    bg-transparent border-[#E5DCC8] border-dashed
+                    hover:bg-[#F5E7C6]/30 hover:border-solid
+                    transition-all duration-200 cursor-pointer
+                    py-3 px-4
+                  `}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#999] text-sm group-hover:text-[#FF6D1F] transition-colors">
+                        #
+                      </span>
+                      <h3 className="font-medium text-[#222] group-hover:text-[#222]">
+                        {article.title}
+                      </h3>
+                    </div>
+                    <span className="text-xs text-[#999] font-mono">
+                      {article.date}
+                    </span>
+                  </div>
+                </Card>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Newsletter Section */}
+        <section className="mb-14">
+          <Card className="bg-[#222] border-[#333] py-6 px-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[#FF6D1F] text-sm">{">"}</span>
+              <span className="text-[#FAF3E1] font-medium">newsletter</span>
+              <span className="cursor-blink text-[#FF6D1F]">_</span>
+            </div>
+            <p className="text-sm text-[#888] mb-4">
+              Recibí updates sobre lo que estamos construyendo, aprendizajes y contenido nuevo.
+            </p>
+            <form 
+              className="flex gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                // TODO: Integrate with newsletter service
+                alert('Gracias por suscribirte!');
+                setEmail('');
+              }}
+            >
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@email.com"
+                className="flex-1 bg-[#333] border border-[#444] text-[#FAF3E1] text-sm px-3 py-2 rounded font-mono placeholder:text-[#666] focus:outline-none focus:border-[#FF6D1F]"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-[#FF6D1F] text-[#FAF3E1] text-sm px-4 py-2 rounded font-medium hover:bg-[#FF6D1F]/90 transition-colors"
+              >
+                Suscribirse
+              </button>
+            </form>
+          </Card>
         </section>
 
         {/* Footer */}
