@@ -119,7 +119,16 @@ export default function Home() {
           <p className="text-sm text-[#666] font-mono leading-relaxed">
             Hola! Soy t0t0, y junto a Ulish, amamos construir productos digitales utilizando IA.
             <br />
-            <span className="text-[#999]">// building products, shipping companies</span>
+            <span className="text-[#999]">Descubrí lo nuevo y aprendé con nosotros →</span>
+            {" "}
+            <a
+              href="https://youtube.com/@t0t0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF6D1F] hover:underline"
+            >
+              YouTube
+            </a>
           </p>
           <div className="flex gap-4 mt-4">
             <a
