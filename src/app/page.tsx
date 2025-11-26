@@ -80,9 +80,9 @@ const agents: Agent[] = [
   },
   {
     id: "a3",
-    name: "DaBoss",
-    tagline: "Tu accountability partner implacable",
-    description: "Agent que te da seguimiento y te persigue hasta que completes tus tareas. No hay escape, no hay excusas.",
+    name: "Logralo",
+    tagline: "Elegí un objetivo, poné un plazo",
+    description: "Agent que te acompaña hasta lograr tu objetivo. Ojo: no cumplir no es gratis $$.",
     status: "building",
   },
 ];
