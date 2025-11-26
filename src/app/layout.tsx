@@ -15,8 +15,11 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "t0t0 — product builder",
-  description: "building things that might work",
+  title: "t0t0 + Ulish",
+  description: "Construimos productos digitales utilizando IA",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
